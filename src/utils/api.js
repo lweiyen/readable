@@ -1,4 +1,5 @@
 const api = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
+const credentials = process.env.REACT_APP_BACKEND ? 'include' : 'same-origin';
 const headers = {
   Accept: 'application/json',
   Authorization: "test"
@@ -13,17 +14,17 @@ function renameKeys(obj, keyName) {
 }
 
 const getAllCategories = () =>
-  fetch(`${api}/categories`, { headers,  credentials: "include" } )
+  fetch(`${api}/categories`, { headers, credentials } )
     .then(res => res.json())
     .then(data => renameKeys(data.categories, 'name'));
 
 const getAllPosts = () =>
-  fetch(`${api}/posts`, { headers,  credentials: "include" } )
+  fetch(`${api}/posts`, { headers, credentials } )
     .then(res => res.json())
     .then(data => renameKeys(data, 'id'));
 
 export const getPostComments = (pid) =>
-  fetch(`${api}/posts/${pid}/comments`, { headers,  credentials: "include" } )
+  fetch(`${api}/posts/${pid}/comments`, { headers,  credentials } )
     .then(res => res.json())
     .then(data => renameKeys(data, 'id'));
 
@@ -43,7 +44,7 @@ export const voteOnPost = (pid, option) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
     body: JSON.stringify({ option })
   }).then(res => res.json());
   
@@ -54,7 +55,7 @@ export const updatePost = (pid, title, body) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
     body: JSON.stringify({ title, body })
   }).then(res => res.json());
         
@@ -65,7 +66,7 @@ export const removePost = (pid) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
   }).then(res => res.json());
 
 export const addPost = (post) =>
@@ -75,7 +76,7 @@ export const addPost = (post) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
     body: JSON.stringify(post)
   }).then(res => res.json());
 
@@ -86,7 +87,7 @@ export const voteOnComment = (cid, option) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
     body: JSON.stringify({ option })
   }).then(res => res.json());
   
@@ -97,7 +98,7 @@ export const updateComment = (cid, timestamp, body) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
     body: JSON.stringify({ timestamp, body })
   }).then(res => res.json());
         
@@ -108,7 +109,7 @@ export const removeComment = (cid) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
   }).then(res => res.json());
 
 export const addComment = (comment) =>
@@ -118,6 +119,6 @@ export const addComment = (comment) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    credentials: "include",
+    credentials,
     body: JSON.stringify(comment)
   }).then(res => res.json());
